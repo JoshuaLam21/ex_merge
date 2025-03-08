@@ -10,10 +10,15 @@ def get_todos():
     return jsonify(todos), 200
 
 @app.route('/todos', methods=['POST'])
-def add_item():
-    items = request.json
-    todos.append(items) # Change "items.append(todo)" to  "todos.append(items)"
-    return jsonify(items), 201 # Change "todo" to "items"
+def add_todo():
+    items = request.json # Used branch "main"
+
+    # add item only if it is not already present
+    if items in todos: # Manually changed "todo" to "items"
+        return jsonify({'error': 'Item already exists'}), 400
+    else:
+        todos.append(items) # Used branch "main"
+        return jsonify(items), 201 # Used branch "main"
 
 @app.route('/todos/<int:todo_id>', methods=['PUT'])
 def update_todo(todo_id):
